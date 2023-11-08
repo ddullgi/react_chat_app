@@ -1,9 +1,11 @@
 import { useEffect, useState } from "react";
 import "./App.css";
 import socket from "./server";
+import InputField from "./components/InputField/InputField";
 
 function App() {
   const [user, setUser] = useState(null);
+  const [message, setMessage] = useState("");
 
   useEffect(() => {
     askUserName();
@@ -23,9 +25,23 @@ function App() {
     });
   };
 
+  const sendMessage = (e) => {
+    e.preventDefault();
+
+    socket.emit("sendMessage", message, (res) => {
+      console.log("[APP]sendMessage res:", res);
+    });
+  };
+
   return (
     <div>
-      <div className="App"></div>
+      <div className="App">
+        <InputField
+          message={message}
+          setMessage={setMessage}
+          sendMessage={sendMessage}
+        />
+      </div>
     </div>
   );
 }
