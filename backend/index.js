@@ -13,5 +13,5 @@ const io = new Server(httpServer, {
 require("./utils/io")(io);
 
 httpServer.listen(process.env.PORT, () => {
-  console.log("[BE_INDEX] server listening on port", process.env.PORT);
+  console.log("[BE] server listening on port", process.env.PORT);
 });
