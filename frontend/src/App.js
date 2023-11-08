@@ -8,6 +8,9 @@ function App() {
   const [message, setMessage] = useState("");
 
   useEffect(() => {
+    socket.on("message", (message) => {
+      console.log("[APP]message:", message);
+    });
     askUserName();
   }, []);
 
