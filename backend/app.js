@@ -12,6 +12,6 @@ main().catch((err) => console.log(err));
 async function main() {
   await mongoose
     .connect(process.env.DB)
-    .then(() => console.log("[BE_APP] connected to database"));
+    .then(() => console.log("[BE] connected to database"));
 }
 module.exports = app;
