@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import "./App.css";
 import socket from "./server";
 import InputField from "./components/InputField/InputField";
@@ -9,12 +9,18 @@ function App() {
   const [message, setMessage] = useState("");
   const [messageList, setMessageList] = useState([]);
 
+  const messageEndRef = useRef(null);
+
   useEffect(() => {
     socket.on("message", (message) => {
       setMessageList((prevState) => prevState.concat(message));
     });
     askUserName();
   }, []);
+
+  useEffect(() => {
+    messageEndRef.current.scrollIntoView({ behavior: "smooth" });
+  }, [messageList]);
 
   const askUserName = () => {
     const userName = prompt("당신의 닉네임을 입력하세요");
@@ -43,6 +49,7 @@ function App() {
     <div>
       <div className="App">
         <MessageContainer messageList={messageList} user={user} />
+        <div className="message-end" ref={messageEndRef}></div>
         <InputField
           message={message}
           setMessage={setMessage}
