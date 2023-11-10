@@ -3,6 +3,15 @@ import "./MessageContainer.css";
 import { Container } from "@mui/system";
 
 const MessageContainer = ({ messageList, user }) => {
+  const changeDate = (date) => {
+    const newDate = new Date(date);
+    const hour = newDate.getHours();
+    const minute = newDate.getMinutes();
+    const ampm = hour > 12 ? `오후 ${hour - 12}` : `오전 ${hour}`;
+    const time = `${ampm}:${minute}`;
+    return time;
+  };
+
   return (
     <div>
       {messageList.map((message, index) => {
@@ -32,7 +41,23 @@ const MessageContainer = ({ messageList, user }) => {
                       : { visibility: "hidden" }
                   }
                 />
-                <div className="your-message">{message.chat}</div>
+                <div className="your-message-box">
+                  <div>
+                    {(index === 0
+                      ? { visibility: "visible" }
+                      : messageList[index - 1].user.name === user.name) ||
+                    messageList[index - 1].user.name === "system" ? (
+                      <div className="your-name">{message?.user?.name}</div>
+                    ) : (
+                      ""
+                    )}
+
+                    <div className="your-message">{message.chat}</div>
+                  </div>
+                  <div className="your-message-time">
+                    {changeDate(message.createdAt)}
+                  </div>
+                </div>
               </div>
             )}
           </Container>
